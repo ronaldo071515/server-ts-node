@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 
 import userRoutes from '../routes/usuario';
+import db from '../db/connection';
 
 
 
@@ -18,13 +19,26 @@ class Server {
 		this.app = express();
 		this.port = process.env.PORT || '8000';
 
+		this.dbConnection();
+
 		this.middlewares();
 
 		this.routes();//lo llamamos al constructor para definir mis rutas
 	}
 
 	//Conectar BD
-	
+	async dbConnection() {
+
+		try {
+
+			await db.authenticate();
+			console.log('db online');
+			
+		} catch (error: any ) {
+			throw new Error(error);
+		}
+
+	}
 
 	//funciones que se ejecutan antes que nuestras rutas
 	middlewares() {
