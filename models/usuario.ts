@@ -3,8 +3,8 @@ import db from '../db/connection';
 
 
 
-const Usuario = db.define('Usuario', {
-	id: {
+const Usuario = db.define('usuarios', {
+	nombre: {
 		type: DataTypes.STRING
 	},
 	email: {
