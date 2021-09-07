@@ -15,7 +15,7 @@ router.get('/',    getUsuarios);
 router.get('/:id', getUsuario);
 router.post('/',   postUsuario);
 router.put('/:id', putUsuario);
-router.delete('/', deleteUsuario);
+router.delete('/:id', deleteUsuario);
 
 
 

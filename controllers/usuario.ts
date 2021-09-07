@@ -5,7 +5,11 @@ import Usuario from '../models/usuario';
 
 export const getUsuarios = async(req: Request, res: Response) => {
 
-	const usuarios = await Usuario.findAll();
+	const usuarios = await Usuario.findAll({
+		where: {
+			estado: true
+		}
+	});
 
 	res.json({ usuarios });
 	
@@ -92,13 +96,25 @@ export const putUsuario = async(req: Request, res: Response) => {
 }
 
 
-export const deleteUsuario = ( req: Request, res: Response ) => {
+export const deleteUsuario = async( req: Request, res: Response ) => {
 
 	const { id } = req.params;
 
+	const usuario = await Usuario.findByPk(id);
+
+	if( !usuario ){
+		return res.status(400).json({
+			msg: `No existe un usuario con el id: ${ id }`
+		});
+	}
+
+	await usuario.update({ estado: false });
+
+	// await usuario.destroy();
+
 	res.json({
-		msg: 'delete Usuario',
-		id
+		msg: 'Usuario eliminado',
+		usuario
 	});
 
 }
